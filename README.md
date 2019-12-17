@@ -1,0 +1,18 @@
+# vue-long-ripple
+
+> 仿知乎、掘金点击动画效果,支持移动端长按特效
+
+## Build Setup
+
+``` bash
+# install dependencies
+npm install
+
+# serve with hot reload at localhost:8080
+npm run dev
+
+# build for production with minification
+npm run build
+```
+
+For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
