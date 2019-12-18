@@ -1,18 +1,35 @@
 # vue-long-ripple
 
-> 仿知乎、掘金点击动画效果,支持移动端长按特效
+> 仿知乎、掘金点击动画效果插件,支持div、btn等标签，响应式wapper大小，可自定义波纹，开箱即用。 ***支持移动端长按特效***
 
-## Build Setup
+## 安装
 
 ``` bash
-# install dependencies
-npm install
+## 下载安装包
+npm install vue-long-ripple
 
-# serve with hot reload at localhost:8080
-npm run dev
+# 在vue中引用
+import Vue from 'vue'
+import App from './App.vue'
+import VueRipple from './lib/index.js'
 
-# build for production with minification
-npm run build
+Vue.use(VueRipple)
+
+# 在组件中引用
+<template>
+  <div>
+    <div class="btn">
+      <vue-ripple></vue-ripple>
+    </div>
+  </div>
+</template>
+<style>
+.btn {
+  width: 30%;
+  height: 300px;
+  background: #eeeeee;
+  margin: 0 auto;
+}
+</style>
 ```
-
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## 效果展示
