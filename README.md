@@ -4,7 +4,7 @@
 
 ## 安装
 
-``` bash
+```
 ## 下载安装包
 npm install vue-long-ripple
 
