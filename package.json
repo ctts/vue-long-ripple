@@ -1,7 +1,7 @@
 {
   "name": "vue-long-ripple",
   "description": "仿知乎、掘金点击波纹动画效果,支持移动端长按特效",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "ctts <38169791+ctts@users.noreply.github.com>",
   "license": "MIT",
   "private": false,
@@ -27,8 +27,7 @@
     "last 2 versions",
     "not ie <= 8"
   ],
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "vue": "^2.6.10",
     "babel-core": "^6.26.0",
