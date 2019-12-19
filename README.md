@@ -53,7 +53,7 @@ Vue.use(VueRipple)
 
 > PC直接使用
 
-![PC图片使用](https://github.com/ctts/vue-long-ripple/raw/master/static/img/1.gif)
+![PC图片使用](https://github.com/ctts/vue-long-ripple/raw/master/static/img/6.gif)
 
 ![PC直接使用](https://github.com/ctts/vue-long-ripple/raw/master/static/img/1.gif)
 
