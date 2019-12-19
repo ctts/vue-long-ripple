@@ -16,12 +16,6 @@
 4. 移动端支持长按特效！（花了不少时间）长按时间默认为 500ms 
 5. 无第三方依赖
 
-## 1.0.2 更新
-
-1. 添加了长按时间回调函数
-2. 添加了长按时间参数
-
-
 ## 安装
 
 ``` 
@@ -91,40 +85,12 @@ Vue.use(VueRipple)
 
 ### ripple时间
 
-默认为 0.6s 为保证效果，请不要超出1.5s（当然你觉得时间长好看我也无所谓啦），请使用 Number 类型。
+默认为 0.6s 为保证效果，请不要超出2s（当然你觉得时间长好看我也无所谓啦），请使用 Number 类型。
 
-
+移动端长按时间默认为 0.5s ，当用户设定了enterTime，则改为 enterTime-0.1s，
 
 ``` 
 <vue-ripple :enterTime="1"></vue-ripple>
-```
-### 长按时间
-
-请注意，切勿将长按时间超出 enterTime ，可能发生一些显示bug!
-
-移动端长按时间默认为 0.5s ，可以通过 longPressTime 设置想要的长按触发时间。
-
-长按可以添加回调函数，有两种回调函数，分别是：
-1. 长按时间到达时触发：timeup
-2. 手势抬起时触发：mouseup
-
-通过 props 传入即可。
-
-例子：
-```
-<vue-long-ripple :timeup="timeup" :mouseup="mouseup" :longPressTime="0.2"></vue-long-ripple>
-
-methods: {
-  click(){
-    console.log('click');
-  },
-  timeup(){
-    console.log('timeup')
-  },
-  mouseup(){
-    console.log('mouseup')
-  }
-},
 ```
 
 ### 绝对定位

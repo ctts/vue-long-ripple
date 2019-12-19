@@ -14,7 +14,11 @@
       @after-enter="fadeRipple(ripple)"
       :key="'ripple'+index"
     >
-      <div :style="ripple.style" class="ripple-container" v-show="ripple.show"></div>
+      <div
+        :style="ripple.style"
+        class="ripple-container"
+        v-show="ripple.show"
+      ></div>
     </transition>
   </div>
 </template>
@@ -23,9 +27,12 @@ export default {
   name: 'VueLongRipple',
   props: {
     backgroundColor: String,
-    enterTime: Number
+    enterTime: Number,
+    longPressTime: Number,
+    timeup: Function,
+    mouseup: Function
   },
-  data() {
+  data () {
     return {
       ripples: [],
       clearTimer: null,
@@ -36,7 +43,7 @@ export default {
       height: 0
     }
   },
-  mounted() {
+  mounted () {
     let container = this.$refs.ripp_container
     let parent = container.parentNode
     this.width = parent.clientWidth + 'px'
@@ -68,12 +75,12 @@ export default {
     })
   },
   computed: {
-    lastRipple() {
+    lastRipple () {
       return this.ripples[this.ripples.length - 1]
     }
   },
   methods: {
-    showRipple(e) {
+    showRipple (e) {
       let show = false
       let container = this.$refs.ripp_container
       let rippleSideLength = this.rippleSideLength
@@ -108,13 +115,13 @@ export default {
         this.$set(this.ripples[this.ripples.length - 1], 'show', true)
       })
     },
-    clickStart(e) {
+    clickStart (e) {
       if (this.mediaQueries()) {
         this.showRipple(e)
       }
     },
     // 清除失效的transition
-    leaveRipple() {
+    leaveRipple () {
       if (this.clearTimer !== null) {
         clearTimeout(this.clearTimer)
       }
@@ -122,13 +129,13 @@ export default {
         this.ripples = []
       }, this.enterTime ? this.enterTime * 1000 + 400 : 1000)
     },
-    fadeRipple(ripple) {
+    fadeRipple (ripple) {
       if (ripple.isClick) {
         ripple.show = false
       }
     },
     // 媒体查询
-    mediaQueries() {
+    mediaQueries () {
       let userAgentInfo = navigator.userAgent
       let Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod")
       let flag = true
@@ -141,24 +148,26 @@ export default {
       return flag
     },
     // 模拟长按
-    touchStart(e) {
+    touchStart (e) {
       this.showRipple(e)
       // 模拟计时
       if (this.pressTimer) clearTimeout(this.pressTimer)
       this.pressTimer = setTimeout(() => {
         // 长按回调函数
+        this.timeup()
         this.lastRipple.isClick = false
         this.pressTimer = null
         clearTimeout(this.clearTimer)
-      }, this.enterTime ? this.enterTime * 1000 - 100 : 500)
+      }, this.longPressTime ? this.longPressTime * 1000 - 100 : 500)
     },
     // 结束触摸
-    touchEnd() {
+    touchEnd () {
       if (this.pressTimer) {
         // 若是点击事件
         this.lastRipple.isClick = true
       } else {
-        // 长按结束时触发
+        // 长按结束时触发回调
+        this.mouseup()
         this.lastRipple.show = false
         // 清除
         this.leaveRipple()
@@ -167,17 +176,17 @@ export default {
       this.pressTimer = null
     },
     // 修改css变量
-    changeProperty(ref, proper_name, data) {
+    changeProperty (ref, proper_name, data) {
       ref.style.setProperty(proper_name, data)
     }
   },
   watch: {
-    backgroundColor() {
+    backgroundColor () {
       if (this.backgroundColor) {
         this.changeProperty(this.$refs.ripp_container, '--ripple-color', this.backgroundColor)
       }
     },
-    enterTime() {
+    enterTime () {
       if (this.enterTime) {
         this.changeProperty(this.$refs.ripp_container, '--ripple-time', this.enterTime + 's')
       }
