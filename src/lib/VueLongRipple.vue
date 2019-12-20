@@ -169,7 +169,9 @@ export default {
       if (this.pressTimer) clearTimeout(this.pressTimer)
       this.pressTimer = setTimeout(() => {
         // 长按回调函数
-        this.timeup()
+        if (Object.prototype.toString.call(this.timeup) === '[object Funciton]') {
+          this.timeup()
+        }
         this.lastRipple.isClick = false
         this.pressTimer = null
         clearTimeout(this.clearTimer)
@@ -182,7 +184,9 @@ export default {
         this.lastRipple.isClick = true
       } else {
         // 长按结束时触发回调
-        this.mouseup()
+        if (Object.prototype.toString.call(this.timeup) === '[object Funciton]') {
+          this.mouseup()
+        }
         this.lastRipple.show = false
         // 清除
         this.leaveRipple()
