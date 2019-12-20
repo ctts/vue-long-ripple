@@ -1,6 +1,12 @@
 <template>
-  <div id="app" @click="click">
-    <vue-long-ripple :timeup="timeup" :mouseup="mouseup" :longPressTime="0.2"></vue-long-ripple>
+  <div
+    id="app"
+    @click="click"
+  >
+    <vue-long-ripple
+      :timeup="timeup"
+      :mouseup="mouseup"
+    ></vue-long-ripple>
   </div>
 </template>
 
@@ -8,13 +14,13 @@
 export default {
   name: 'app',
   methods: {
-    click(){
+    click () {
       console.log('click');
     },
-    timeup(){
+    timeup () {
       console.log('timeup')
     },
-    mouseup(){
+    mouseup () {
       console.log('mouseup');
     }
   },

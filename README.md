@@ -101,10 +101,12 @@ Vue.use(VueRipple)
 <vue-ripple :enterTime="1"></vue-ripple>
 ```
 ### 长按时间
-
-请注意，切勿将长按时间超出 enterTime ，可能发生一些显示bug!
+长按的一系列操作只在移动端有效！
+请注意，切勿将长按时间超出 enterTime 或过小！
 
 移动端长按时间默认为 0.5s ，可以通过 longPressTime 设置想要的长按触发时间。
+若只设置了 enterTime ，则longPressTime默认为 enterTime - 0.1。
+若 enterTime 大于了 longPressTime，则变成 enterTime-0.1。
 
 长按可以添加回调函数，有两种回调函数，分别是：
 1. 长按时间到达时触发：timeup

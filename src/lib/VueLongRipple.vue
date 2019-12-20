@@ -26,9 +26,18 @@
 export default {
   name: 'VueLongRipple',
   props: {
-    backgroundColor: String,
-    enterTime: Number,
-    longPressTime: Number,
+    backgroundColor: {
+      type: String,
+      default: 'rgba(0, 0, 0, 0.25'
+    },
+    enterTime: {
+      type: Number,
+      default: 0.6
+    },
+    longPressTime: {
+      type: Number,
+      default: 0.5
+    },
     timeup: Function,
     mouseup: Function
   },
@@ -37,7 +46,6 @@ export default {
       ripples: [],
       clearTimer: null,
       pressTimer: null,
-      isLongPress: false,
       rippleSideLength: 0,
       width: 0,
       height: 0
@@ -62,12 +70,8 @@ export default {
     observer.observe(parent, { attributeFilter: ["style"] })
 
     // 修改默认值
-    if (this.backgroundColor) {
-      this.changeProperty(container, '--ripple-color', this.backgroundColor)
-    }
-    if (this.enterTime) {
-      this.changeProperty(container, '--ripple-time', this.enterTime + 's')
-    }
+    this.changeProperty(container, '--ripple-color', this.backgroundColor)
+    this.changeProperty(container, '--ripple-time', this.enterTime + 's')
 
     // 在下次渲染时改变
     this.$nextTick(() => {
@@ -149,6 +153,17 @@ export default {
     },
     // 模拟长按
     touchStart (e) {
+      let time = 0
+      if (this.longPressTime !== 0.5) {
+        if (this.enterTime > this.longPressTime) {
+          time = this.longPressTime
+        } else {
+          time = this.enterTime - 0.1
+          console.warn('longPressTime must less than enterTime');
+        }
+      } else {
+        time = this.enterTime - 0.1
+      }
       this.showRipple(e)
       // 模拟计时
       if (this.pressTimer) clearTimeout(this.pressTimer)
@@ -158,7 +173,7 @@ export default {
         this.lastRipple.isClick = false
         this.pressTimer = null
         clearTimeout(this.clearTimer)
-      }, this.longPressTime ? this.longPressTime * 1000 - 100 : 500)
+      }, time * 1000)
     },
     // 结束触摸
     touchEnd () {
