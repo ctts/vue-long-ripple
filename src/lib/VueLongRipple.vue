@@ -2,9 +2,10 @@
   <div
     class="rippleBtn"
     :style="{width:width,height:height}"
-    @click="clickStart"
     @touchstart="touchStart"
     @touchend="touchEnd"
+    @mousedown="pcMousedown"
+    @mouseup="pcMouseup"
     ref="ripp_container"
   >
     <transition
@@ -38,8 +39,6 @@ export default {
       type: Number,
       default: 0.5
     },
-    timeup: Function,
-    mouseup: Function
   },
   data () {
     return {
@@ -48,7 +47,8 @@ export default {
       pressTimer: null,
       rippleSideLength: 0,
       width: 0,
-      height: 0
+      height: 0,
+      isPC: true
     }
   },
   mounted () {
@@ -57,7 +57,7 @@ export default {
     this.width = parent.clientWidth + 'px'
     this.height = parent.clientHeight + 'px'
     const that = this
-
+    this.isPC = this.mediaQueries()
     // 使用mutationObserver添加父组件大小监听
     const observer = new MutationObserver(function () {
 
@@ -92,15 +92,15 @@ export default {
       let rippleY = 0
       let isClick = null
 
-      if (this.mediaQueries()) {
+      if (this.isPC) {
         // pc端
-        rippleX = e.clientX - container.getBoundingClientRect().left - rippleSideLength / 2.5
-        rippleY = e.clientY - container.getBoundingClientRect().top - rippleSideLength / 2.5
+        rippleX = e.clientX - container.getBoundingClientRect().left - rippleSideLength / 2
+        rippleY = e.clientY - container.getBoundingClientRect().top - rippleSideLength / 2
         isClick = true
       } else {
         // 移动端
-        rippleX = e.touches[0].clientX - container.getBoundingClientRect().left - rippleSideLength / 2.5
-        rippleY = e.touches[0].clientY - container.getBoundingClientRect().top - rippleSideLength / 2.5
+        rippleX = e.touches[0].clientX - container.getBoundingClientRect().left - rippleSideLength / 2
+        rippleY = e.touches[0].clientY - container.getBoundingClientRect().top - rippleSideLength / 2
         isClick = false
       }
 
@@ -119,10 +119,11 @@ export default {
         this.$set(this.ripples[this.ripples.length - 1], 'show', true)
       })
     },
-    clickStart (e) {
-      if (this.mediaQueries()) {
-        this.showRipple(e)
-      }
+    pcMousedown (e) {
+      this.isPC && this.touchStart(e)
+    },
+    pcMouseup (e) {
+      this.isPC && this.touchEnd(e)
     },
     // 清除失效的transition
     leaveRipple () {
@@ -154,6 +155,7 @@ export default {
     // 模拟长按
     touchStart (e) {
       let time = 0
+      // 设置长按时间
       if (this.longPressTime !== 0.5) {
         if (this.enterTime > this.longPressTime) {
           time = this.longPressTime
@@ -169,9 +171,7 @@ export default {
       if (this.pressTimer) clearTimeout(this.pressTimer)
       this.pressTimer = setTimeout(() => {
         // 长按回调函数
-        if (Object.prototype.toString.call(this.timeup) === '[object Funciton]') {
-          this.timeup()
-        }
+        this.$emit('timeup')
         this.lastRipple.isClick = false
         this.pressTimer = null
         clearTimeout(this.clearTimer)
@@ -184,9 +184,7 @@ export default {
         this.lastRipple.isClick = true
       } else {
         // 长按结束时触发回调
-        if (Object.prototype.toString.call(this.timeup) === '[object Funciton]') {
-          this.mouseup()
-        }
+        this.$emit('mouseup')
         this.lastRipple.show = false
         // 清除
         this.leaveRipple()

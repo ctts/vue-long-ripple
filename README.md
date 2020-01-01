@@ -16,11 +16,10 @@
 4. 移动端支持长按特效！（花了不少时间）长按时间默认为 500ms 
 5. 无第三方依赖
 
-## 1.0.2 更新
+## 1.0.4 更新
 
-1. 添加了长按时间回调函数
-2. 添加了长按时间参数
-
+1. 适配了PC端长按效果
+2. 修改了长按回调的调用方法
 
 ## 安装
 
@@ -112,11 +111,11 @@ Vue.use(VueRipple)
 1. 长按时间到达时触发：timeup
 2. 手势抬起时触发：mouseup
 
-通过 props 传入即可。
+使用v-on监听（或使用@）
 
 例子：
 ```
-<vue-long-ripple :timeup="timeup" :mouseup="mouseup" :longPressTime="0.2"></vue-long-ripple>
+<vue-long-ripple @timeup="timeup" @mouseup="mouseup" :longPressTime="0.2"></vue-long-ripple>
 
 methods: {
   click(){

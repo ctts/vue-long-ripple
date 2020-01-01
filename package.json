@@ -10,9 +10,13 @@
     "dist"
   ],
   "keywords": [
-    "vue",
+    "Vue",
+    "vue.js",
+    "wave",
+    "animation",
     "ripple",
-    "longpress"
+    "longpress",
+    "波纹特效"
   ],
   "repository": {
     "type": "git",
@@ -27,9 +31,10 @@
     "last 2 versions",
     "not ie <= 8"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "vue": "^2.6.11"
+  },
   "devDependencies": {
-    "vue": "^2.6.10",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",

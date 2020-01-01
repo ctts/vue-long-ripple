@@ -1,11 +1,8 @@
 <template>
-  <div
-    id="app"
-    @click="click"
-  >
+  <div id="app">
     <vue-long-ripple
-      :timeup="timeup"
-      :mouseup="mouseup"
+      @timeup="timeup"
+      @mouseup="mouseup"
     ></vue-long-ripple>
   </div>
 </template>
@@ -35,7 +32,7 @@ export default {
   text-align: center;
   background: #eeeeee;
   margin-top: 60px;
-  width: 200px;
-  height: 100px;
+  width: 400px;
+  height: 400px;
 }
 </style>
